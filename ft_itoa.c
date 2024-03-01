@@ -6,60 +6,67 @@
 /*   By: mpakhlya <mpakhlya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:58:20 by mpakhlya          #+#    #+#             */
-/*   Updated: 2024/02/26 20:17:43 by mpakhlya         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:19:00 by mpakhlya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static long	len(int n)
+static char	*ft_check(long nb, char *str, int i)
 {
-	long	i;
-
-	i = 0;
-	if (n <= 0)
+	if (nb < 0)
 	{
-		i++;
-		n *= -1;
+		str[0] = '-';
+		nb *= -1;
 	}
-	while (n > 0)
+	while (nb > 0 && i >= 0)
 	{
-		n /= 10;
-		i++;
+		str[i] = 48 + (nb % 10);
+		nb = nb / 10;
+		i--;
 	}
-	return (i);
+	return (str);
 }
 
-static char	*z(char *result)
+static int	ft_len(long nb)
 {
-	if (result == 0)
+	long	len;
+
+	len = 0;
+	if (nb == 0)
+		len = 1;
+	while (nb < 0)
 	{
-		result[0] = 0;
-		result[1] = '\0';
+		nb *= -1;
+		len++;
 	}
-	return (result);
+	while (nb > 0)
+	{
+		nb = nb / 10;
+		len++;
+	}
+	return (len);
 }
 
 char	*ft_itoa(int n)
 {
+	char	*str;
+	long	nb;
 	int		i;
-	char	*result;
-	int		mp;
 
-	i = len(n);
-	if (n < 0)
-		mp = -1;
-	i = i + (n <= 0);
-	result = (char *) malloc(sizeof(char) * (i + 1));
-	if (!result)
-		return (z(result));
-	while (n != 0)
+	nb = n;
+	i = ft_len(nb);
+	str = (char *)malloc(sizeof(char) * (i + 1));
+	if (!str)
+		return (0);
+	if (nb == 0)
 	{
-		result[--i] = (char)(n % 10)*(mp + '0');
-		n /= 10;
+		str[0] = 48;
+		str[1] = 0;
+		return (str);
 	}
-	--i;
-	if (mp < 0)
-		result[i] = '-';
-	return (result);
+	str[i--] = '\0';
+	if (str == NULL)
+		return (NULL);
+	return (ft_check(nb, str, i));
 }

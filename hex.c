@@ -6,16 +6,16 @@
 /*   By: mpakhlya <mpakhlya@student.42yerevan.am    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:11:12 by mpakhlya          #+#    #+#             */
-/*   Updated: 2024/02/22 19:17:47 by mpakhlya         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:23:10 by mpakhlya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
- int ft_hexlen(unsigned int num)
+int	ft_hexlen(unsigned int num)
 {
 	int	len;
-	
+
 	len = 0;
 	while (num != 0)
 	{
@@ -25,7 +25,7 @@
 	return (len);
 }
 
-void ft_puthex(unsigned int num, const char format)
+void	ft_puthex(unsigned int num, const char format)
 {
 	if (num >= 16)
 	{
@@ -35,7 +35,7 @@ void ft_puthex(unsigned int num, const char format)
 	else
 	{
 		if (num <= 9)
-				ft_putchar_fd((num + '0'), 1);
+			ft_putchar_fd((num + '0'), 1);
 		else
 		{
 			if (format == 'x')
@@ -51,6 +51,6 @@ int	ft_printhex(unsigned int num, const char format)
 	if (num == 0)
 		return (write(1, "0", 1));
 	else
-			ft_puthex(num, format);
+		ft_puthex(num, format);
 	return (ft_hexlen(num));
 }
